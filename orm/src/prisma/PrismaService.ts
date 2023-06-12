@@ -8,7 +8,7 @@ export class PrismaService {
         return this.client.user.findMany({
             include: {
                 posts: true,
-            }
+            },
         });
     }
 

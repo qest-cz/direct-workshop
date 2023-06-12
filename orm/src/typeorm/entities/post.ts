@@ -16,7 +16,7 @@ export class Post {
     published: boolean
 
     @ManyToOne((type) => User, (user) => user.posts, {
-        eager: true // autoload user to post
+        // eager: true // autoload user to post
     })
     author: User
 }
