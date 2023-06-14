@@ -19,11 +19,7 @@ services:
       - /bin/sh
       - -c
       - |
-        npm install -g nx
-        npm install -g @nrwl/cli
         cd code
-        npm install
-        cd pawesome-care
         npm install
   controls:
     image: node:14
@@ -39,8 +35,8 @@ services:
       - /bin/sh
       - -c
       - |
-        cd code/pawesome-care
-        npx nx serve controlls
+        cd code
+        npx @nestjs/cli@latest run controlls
   grid:
     image: node:14
     depends_on:
@@ -53,8 +49,8 @@ services:
       - /bin/sh
       - -c
       - |
-        cd code/pawesome-care
-        npx nx serve grid
+        cd code
+        npx @nestjs/cli@latest run grid
   game:
     image: node:14
     depends_on:
@@ -67,8 +63,8 @@ services:
       - /bin/sh
       - -c
       - |
-        cd code/pawesome-care
-        npx nx serve game
+        cd code
+        npx @nestjs/cli@latest run game
 
 volumes:
   cache:
