@@ -1,0 +1,75 @@
+services:
+  cache:
+    image: redis:6.2-alpine
+    restart: always
+    ports:
+      - '6379:6379'
+    command: redis-server --save 20 1 --loglevel warning --requirepass eYVX7EwVmmxKPCDmwMtyKVge8oLd2t81
+    volumes:
+      - cache:/data
+  dev:
+    image: node:14
+    depends_on:
+      - cache
+    environment:
+      - REDIS_HOST=cache
+    volumes:
+      - ./:/code
+    command:
+      - /bin/sh
+      - -c
+      - |
+        npm install -g nx
+        npm install -g @nrwl/cli
+        cd code
+        npm install
+        cd pawesome-care
+        npm install
+  controls:
+    image: node:14
+    depends_on:
+      - dev
+    ports:
+      - 3000:3000
+    environment:
+      - REDIS_HOST=cache
+    volumes:
+      - ./:/code
+    command:
+      - /bin/sh
+      - -c
+      - |
+        cd code/pawesome-care
+        npx nx serve controlls
+  grid:
+    image: node:14
+    depends_on:
+      - dev
+    environment:
+      - REDIS_HOST=cache
+    volumes:
+      - ./:/code
+    command:
+      - /bin/sh
+      - -c
+      - |
+        cd code/pawesome-care
+        npx nx serve grid
+  game:
+    image: node:14
+    depends_on:
+      - dev
+    environment:
+      - REDIS_HOST=cache
+    volumes:
+      - ./:/code
+    command:
+      - /bin/sh
+      - -c
+      - |
+        cd code/pawesome-care
+        npx nx serve game
+
+volumes:
+  cache:
+    driver: local
