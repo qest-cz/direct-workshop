@@ -12,6 +12,8 @@
 - install node: https://kinsta.com/blog/how-to-install-node-js/
 - `npm install -g nx`
 - `npm install -g @nrwl/cli`
+- install docker: https://docs.docker.com/engine/install/
+- install docker-compose: https://docs.docker.com/compose/install/
 
 ## How to run via docker
 - `docker compose up install`
