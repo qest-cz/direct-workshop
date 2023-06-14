@@ -7,6 +7,22 @@ services:
     command: redis-server --save 20 1 --loglevel warning --requirepass eYVX7EwVmmxKPCDmwMtyKVge8oLd2t81
     volumes:
       - cache:/data
+  install:
+    image: node:14
+    environment:
+      - REDIS_HOST=cache
+    volumes:
+      - ./:/code
+    command:
+      - /bin/sh
+      - -c
+      - |
+        npm install -g nx
+        npm install -g @nrwl/cli
+        cd code
+        npm install
+        cd pawesome-care
+        npm install
   controls:
     image: node:14
     depends_on:
@@ -21,12 +37,8 @@ services:
       - /bin/sh
       - -c
       - |
-        npm install -g nx
-        npm install -g @nrwl/cli
         cd code
-        npm install
         cd pawesome-care
-        npm install
         npx nx serve controlls
   grid:
     image: node:14
@@ -40,12 +52,8 @@ services:
       - /bin/sh
       - -c
       - |
-        npm install -g nx
-        npm install -g @nrwl/cli
         cd code
-        npm install
         cd pawesome-care
-        npm install
         npx nx serve grid
   game:
     image: node:14
@@ -59,12 +67,8 @@ services:
       - /bin/sh
       - -c
       - |
-        npm install -g nx
-        npm install -g @nrwl/cli
         cd code
-        npm install
         cd pawesome-care
-        npm install
         npx nx serve game
 volumes:
   cache:
